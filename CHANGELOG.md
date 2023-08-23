@@ -1,5 +1,10 @@
+<a name="3.0.2"></a>
+## 3.0.2 (2023-08-23)
+* implementation instead of compile
+
 <a name="3.0.1"></a>
-## [3.0.1](https://github.com/bitpay/cordova-plugin-qrscanner/compare/2.6.0...3.0.1) (2019-03-29)
+## 3.0.1 (2023-05-04)
+* workaround for https://github.com/bitpay/cordova-plugin-qrscanner/issues/332
 
 
 ### Bug Fixes
