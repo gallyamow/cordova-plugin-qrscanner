@@ -1,3 +1,7 @@
+<a name="3.0.3"></a>
+## 3.0.3 (2026-09-29)
+* stringValue
+
 <a name="3.0.2"></a>
 ## 3.0.2 (2023-08-23)
 * implementation instead of compile
