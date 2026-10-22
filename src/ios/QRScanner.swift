@@ -18,8 +18,16 @@ class QRScanner : CDVPlugin, AVCaptureMetadataOutputObjectsDelegate {
             case UIInterfaceOrientation.landscapeRight:
                 return AVCaptureVideoOrientation.landscapeRight;
             default:
-                return AVCaptureVideoOrientation.portraitUpsideDown;
+                return AVCaptureVideoOrientation.portrait;
             }
+        }
+
+        // With UIScene lifecycle (cordova-ios@8) statusBarOrientation returns .unknown
+        func currentInterfaceOrientation() -> UIInterfaceOrientation {
+            if #available(iOS 13.0, *) {
+                return self.window?.windowScene?.interfaceOrientation ?? .portrait
+            }
+            return UIApplication.shared.statusBarOrientation
         }
 
         override func layoutSubviews() {
@@ -30,7 +38,7 @@ class QRScanner : CDVPlugin, AVCaptureMetadataOutputObjectsDelegate {
                 }
             }
 
-            self.videoPreviewLayer?.connection?.videoOrientation = interfaceOrientationToVideoOrientation(UIApplication.shared.statusBarOrientation);
+            self.videoPreviewLayer?.connection?.videoOrientation = interfaceOrientationToVideoOrientation(currentInterfaceOrientation());
         }
 
 
@@ -39,6 +47,7 @@ class QRScanner : CDVPlugin, AVCaptureMetadataOutputObjectsDelegate {
             previewLayer!.frame = self.bounds
             self.layer.addSublayer(previewLayer!)
             self.videoPreviewLayer = previewLayer;
+            self.setNeedsLayout()
         }
 
         func removePreviewLayer() {
