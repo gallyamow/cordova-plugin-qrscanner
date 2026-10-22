@@ -300,14 +300,14 @@ class QRScanner : CDVPlugin, AVCaptureMetadataOutputObjectsDelegate {
         }
     }
 
+    // Must not start the camera: ionic-native calls cancelScan on unsubscribe, which may happen after destroy
     @objc func cancelScan(_ command: CDVInvokedUrlCommand){
-        if(self.prepScanner(command: command)){
-            scanning = false
-            if(nextScanningCommand != nil){
-                self.sendErrorCode(command: nextScanningCommand!, error: QRScannerError.scan_canceled)
-            }
-            self.getStatus(command)
+        scanning = false
+        if let scanCommand = nextScanningCommand {
+            nextScanningCommand = nil
+            self.sendErrorCode(command: scanCommand, error: QRScannerError.scan_canceled)
         }
+        self.getStatus(command)
     }
 
     @objc func show(_ command: CDVInvokedUrlCommand) {
